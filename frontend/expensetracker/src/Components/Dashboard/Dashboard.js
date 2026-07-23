@@ -46,13 +46,13 @@ function Dashboard() {
                         <History />
                         <h2 className="salary-title">Min <span>Salary</span>Max</h2>
                         <div className="salary-item">
-                            <p>{rupee}{Math.min(...incomes.map(item => item.amount))}</p>
-                            <p>{rupee}{Math.max(...incomes.map(item => item.amount))}</p>
+                            <p>{rupee}{incomes.length ? Math.min(...incomes.map(item => item.amount)) : 0}</p>
+                            <p>{rupee}{incomes.length ? Math.max(...incomes.map(item => item.amount)) : 0}</p>
                         </div>
                         <h2 className="salary-title">Min <span>Expense</span>Max</h2>
                         <div className="salary-item">
-                            <p>{rupee}{Math.min(...expenses.map(item => item.amount))}</p>
-                            <p>{rupee}{Math.max(...expenses.map(item => item.amount))}</p>
+                            <p>{rupee}{expenses.length ? Math.min(...expenses.map(item => item.amount)) : 0}</p>
+                            <p>{rupee}{expenses.length ? Math.max(...expenses.map(item => item.amount)) : 0}</p>
                         </div>
                     </div>
                 </div>

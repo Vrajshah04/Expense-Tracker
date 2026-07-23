@@ -14,16 +14,16 @@ exports.addIncome = async (req, res) => {
 
     try {
         //validations
-        if(!title || !category || !description || !date){
+        if(!title || !category || !description || !date || amount === undefined || amount === ''){
             return res.status(400).json({message: 'All fields are required!'})
         }
-        if(amount <= 0 || !amount === 'number'){
+        if(Number(amount) <= 0 || isNaN(Number(amount))){
             return res.status(400).json({message: 'Amount must be a positive number!'})
         }
         await income.save()
         res.status(200).json({message: 'Income Added'})
     } catch (error) {
-        res.status(500).json({message: 'Server Error'})
+        res.status(500).json({message: error.message || 'Server Error'})
     }
 
     console.log(income)

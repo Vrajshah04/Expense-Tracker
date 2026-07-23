@@ -9,7 +9,7 @@ import { plus } from '../../utils/Icons';
 
 
 function ExpenseForm() {
-    const {addExpense} = useGlobalContext()
+    const {addExpense, error, setError} = useGlobalContext()
     const [inputState, setInputState] = useState({
         title: '',
         amount: '',
@@ -22,22 +22,26 @@ function ExpenseForm() {
 
     const handleInput = name => e => {
         setInputState({...inputState, [name]: e.target.value})
+        setError(null)
     }
 
-    const handleSubmit = e => {
+    const handleSubmit = async e => {
         e.preventDefault()
-        addExpense(inputState)
-        setInputState({
-            title: '',
-            amount: '',
-            date: '',
-            category: '',
-            description: '',
-        })
+        const success = await addExpense(inputState)
+        if (success) {
+            setInputState({
+                title: '',
+                amount: '',
+                date: '',
+                category: '',
+                description: '',
+            })
+        }
     }
 
     return (
         <ExpenseFormStyled onSubmit={handleSubmit}>
+            {error && <p className="error">{error}</p>}
             <div className="input-control">
                 <input 
                     type="text" 
@@ -101,6 +105,20 @@ const ExpenseFormStyled = styled.form`
     display: flex;
     flex-direction: column;
     gap: 2rem;
+
+    .error {
+        color: red;
+        font-size: 0.9rem;
+        animation: shake 0.5s ease-in-out;
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            20% { transform: translateX(10px); }
+            40% { transform: translateX(-10px); }
+            60% { transform: translateX(10px); }
+            80% { transform: translateX(-10px); }
+            100% { transform: translateX(0); }
+        }
+    }
 
     input, textarea, select {
         font-family: inherit;

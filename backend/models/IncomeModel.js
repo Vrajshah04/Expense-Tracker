@@ -10,9 +10,7 @@ const IncomeSchema = new mongoose.Schema({
     },
     amount: {
         type: Number,
-        required: true,
-        maxLength: 20,
-        trim: true
+        required: true
     },
     type: {
         type: String,
@@ -31,7 +29,7 @@ const IncomeSchema = new mongoose.Schema({
     description: {
         type: String,
         required: true,
-        maxLength: 20,
+        maxLength: 200,
         trim: true
     },
 }, {timestamps: true})

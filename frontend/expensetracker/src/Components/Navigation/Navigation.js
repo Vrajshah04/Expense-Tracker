@@ -58,8 +58,8 @@ const NavStyled = styled.nav`
         gap: 1rem;
 
         img {
-            width: 80px;
-            height: 80px;
+            width: 70px;
+            height: 70px;
             border-radius: 50%;
             object-fit: cover;
             background: #fcf6f9;
@@ -70,10 +70,14 @@ const NavStyled = styled.nav`
 
         h2 {
             color: rgba(34, 34, 96, 1);
+            font-size: 1.4rem;
+            font-weight: 700;
         }
 
         p {
-            color: rgba(34, 34, 96, 0.6);
+            color: rgba(34, 34, 96, 0.7);
+            font-size: 1rem;
+            font-weight: 500;
         }
     }
 
@@ -87,23 +91,32 @@ const NavStyled = styled.nav`
             grid-template-columns: 40px auto;
             align-items: center;
             margin: 0.6rem 0;
-            font-weight: 500;
+            font-size: 1.15rem;
+            font-weight: 600;
             cursor: pointer;
-            transition: all 0.4s ease-in-out;
-            color: rgba(34, 34, 96, 0.6);
+            transition: all 0.3s ease-in-out;
+            color: rgba(34, 34, 96, 0.7);
             padding-left: 1rem;
             position: relative;
 
             i {
-                color: rgba(34, 34, 96, 0.6);
+                color: rgba(34, 34, 96, 0.7);
                 font-size: 1.4rem;
-                transition: all 0.4s ease-in-out;
+                transition: all 0.3s ease-in-out;
+            }
+
+            &:hover {
+                color: rgba(34, 34, 96, 1);
+                i {
+                    color: rgba(34, 34, 96, 1);
+                }
             }
         }
     }
 
     .active {
         color: rgba(34, 34, 96, 1) !important;
+        font-weight: 700 !important;
 
         i {
             color: rgba(34, 34, 96, 1) !important;
@@ -124,10 +137,25 @@ const NavStyled = styled.nav`
     .bottom-nav {
         li.signout {
             cursor: pointer;
-            padding: 0.6rem;
-            transition: background-color 0.3s ease;
+            padding: 0.6rem 1rem;
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: rgba(34, 34, 96, 0.75);
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            transition: all 0.3s ease-in-out;
 
-           
+            i {
+                font-size: 1.3rem;
+            }
+
+            &:hover {
+                color: rgba(235, 87, 87, 1);
+                i {
+                    color: rgba(235, 87, 87, 1);
+                }
+            }
         }
     }
 

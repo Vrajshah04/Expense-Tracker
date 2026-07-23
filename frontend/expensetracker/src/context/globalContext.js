@@ -12,27 +12,50 @@ export const GlobalProvider = ({children}) => {
     const [incomes, setIncomes] = useState([])
     const [expenses, setExpenses] = useState([])
     const [error, setError] = useState(null)
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [isLoggedIn, setIsLoggedInState] = useState(() => {
+        return localStorage.getItem('isLoggedIn') === 'true'
+    });
+
+    const setIsLoggedIn = (value) => {
+        setIsLoggedInState(value);
+        if (value) {
+            localStorage.setItem('isLoggedIn', 'true');
+        } else {
+            localStorage.removeItem('isLoggedIn');
+        }
+    };
 
     //calculate incomes
     const addIncome = async (income) => {
-        console.log(income)
-        const response = await axios.post(`${BASE_URL}add-income`, income)
-            .catch((err) =>{
-                setError(err.response.data.message)
-            })
-        getIncomes()
+        try {
+            await axios.post(`${BASE_URL}add-income`, income)
+            setError(null)
+            getIncomes()
+            return true
+        } catch (err) {
+            setError(err.response?.data?.message || err.message)
+            return false
+        }
     }
 
     const getIncomes = async () => {
-        const response = await axios.get(`${BASE_URL}get-incomes`)
-        setIncomes(response.data)
-        console.log(response.data)
+        try {
+            const response = await axios.get(`${BASE_URL}get-incomes`)
+            if (Array.isArray(response.data)) {
+                setIncomes(response.data)
+            }
+        } catch (err) {
+            console.error("Error fetching incomes:", err)
+        }
     }
 
     const deleteIncome = async (id) => {
-        const res  = await axios.delete(`${BASE_URL}delete-income/${id}`)
-        getIncomes()
+        try {
+            await axios.delete(`${BASE_URL}delete-income/${id}`)
+            getIncomes()
+        } catch (err) {
+            console.error("Error deleting income:", err)
+        }
     }
 
     const totalIncome = () => {
@@ -45,25 +68,37 @@ export const GlobalProvider = ({children}) => {
     }
 
 
-    //calculate incomes
-    const addExpense = async (income) => {
-        console.log(income)
-        const response = await axios.post(`${BASE_URL}add-expense`, income)
-            .catch((err) =>{
-                setError(err.response.data.message)
-            })
-        getExpenses()
+    //calculate expenses
+    const addExpense = async (expense) => {
+        try {
+            await axios.post(`${BASE_URL}add-expense`, expense)
+            setError(null)
+            getExpenses()
+            return true
+        } catch (err) {
+            setError(err.response?.data?.message || err.message)
+            return false
+        }
     }
 
     const getExpenses = async () => {
-        const response = await axios.get(`${BASE_URL}get-expenses`)
-        setExpenses(response.data)
-        console.log(response.data)
+        try {
+            const response = await axios.get(`${BASE_URL}get-expenses`)
+            if (Array.isArray(response.data)) {
+                setExpenses(response.data)
+            }
+        } catch (err) {
+            console.error("Error fetching expenses:", err)
+        }
     }
 
     const deleteExpense = async (id) => {
-        const res  = await axios.delete(`${BASE_URL}delete-expense/${id}`)
-        getExpenses()
+        try {
+            await axios.delete(`${BASE_URL}delete-expense/${id}`)
+            getExpenses()
+        } catch (err) {
+            console.error("Error deleting expense:", err)
+        }
     }
 
     const totalExpenses = () => {
@@ -107,7 +142,7 @@ export const GlobalProvider = ({children}) => {
 
     return (
         <GlobalContext.Provider value={{
-            isLoggedIn, // New state for login
+            isLoggedIn,
             setIsLoggedIn,
             signOut,
             addIncome,
@@ -123,6 +158,8 @@ export const GlobalProvider = ({children}) => {
             totalBalance,
             transactionHistory,
             transactionHistory1,
+            error,
+            setError
         }}>
             {children}
         </GlobalContext.Provider>
