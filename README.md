@@ -43,7 +43,6 @@ ExpenseTracker/
 │   ├── models/           # Mongoose schemas (IncomeModel.js, ExpenseModel.js)
 │   ├── routes/           # Express API endpoints (transactions.js)
 │   ├── .env              # Environment config (git-ignored)
-│   ├── .env.example      # Environment template
 │   ├── app.js            # Express server entry point
 │   └── package.json
 ├── frontend/
@@ -79,9 +78,6 @@ cd backend
 
 # Install dependencies
 npm install
-
-# Create environment file from template
-cp .env.example .env
 ```
 
 Ensure your `.env` file contains:
